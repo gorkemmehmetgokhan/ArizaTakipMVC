@@ -1,0 +1,548 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_ArizaTakipModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tbl_Ariza">
+          <Key>
+            <PropertyRef Name="id_Ariza" />
+          </Key>
+          <Property Name="id_Ariza" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_ArizaTur" Type="smallint" Nullable="false" />
+          <Property Name="id_ArizaDurumTur" Type="tinyint" Nullable="false" />
+          <Property Name="id_Kullanici" Type="int" Nullable="false" />
+          <Property Name="Aciklama" Type="ntext" Nullable="false" />
+          <Property Name="ArizaGirisTarihi" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_ArizaDurumTur">
+          <Key>
+            <PropertyRef Name="id_ArizaDurumTur" />
+          </Key>
+          <Property Name="id_ArizaDurumTur" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArizaDurumTurAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_ArizaTur">
+          <Key>
+            <PropertyRef Name="id_ArizaTur" />
+          </Key>
+          <Property Name="id_ArizaTur" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArizaTurAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Departman">
+          <Key>
+            <PropertyRef Name="id_Departman" />
+          </Key>
+          <Property Name="id_Departman" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmanAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Gorev">
+          <Key>
+            <PropertyRef Name="id_Gorev" />
+          </Key>
+          <Property Name="id_Gorev" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_GorevDurumTur" Type="smallint" Nullable="false" />
+          <Property Name="id_Kullanici" Type="int" Nullable="false" />
+          <Property Name="GorevAciklama" Type="ntext" Nullable="false" />
+          <Property Name="GorevBasTarihi" Type="datetime" Nullable="false" />
+          <Property Name="GorevBitTarihi" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_GorevDurumTur">
+          <Key>
+            <PropertyRef Name="id_GorevDurumTur" />
+          </Key>
+          <Property Name="id_GorevDurumTur" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GorevDurumTurAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Kullanici">
+          <Key>
+            <PropertyRef Name="id_Kullanici" />
+          </Key>
+          <Property Name="id_Kullanici" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Departman" Type="smallint" Nullable="false" />
+          <Property Name="id_KullaniciTur" Type="smallint" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Eposta" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_KullaniciTur">
+          <Key>
+            <PropertyRef Name="id_KullaniciTur" />
+          </Key>
+          <Property Name="id_KullaniciTur" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TurAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbl_Ariza_tbl_ArizaDurumTur">
+          <End Role="tbl_ArizaDurumTur" Type="Self.tbl_ArizaDurumTur" Multiplicity="1" />
+          <End Role="tbl_Ariza" Type="Self.tbl_Ariza" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_ArizaDurumTur">
+              <PropertyRef Name="id_ArizaDurumTur" />
+            </Principal>
+            <Dependent Role="tbl_Ariza">
+              <PropertyRef Name="id_ArizaDurumTur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Ariza_tbl_ArizaTur">
+          <End Role="tbl_ArizaTur" Type="Self.tbl_ArizaTur" Multiplicity="1" />
+          <End Role="tbl_Ariza" Type="Self.tbl_Ariza" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_ArizaTur">
+              <PropertyRef Name="id_ArizaTur" />
+            </Principal>
+            <Dependent Role="tbl_Ariza">
+              <PropertyRef Name="id_ArizaTur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Ariza_tbl_Kullanici">
+          <End Role="tbl_Kullanici" Type="Self.tbl_Kullanici" Multiplicity="1" />
+          <End Role="tbl_Ariza" Type="Self.tbl_Ariza" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Kullanici">
+              <PropertyRef Name="id_Kullanici" />
+            </Principal>
+            <Dependent Role="tbl_Ariza">
+              <PropertyRef Name="id_Kullanici" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Gorev_tbl_GorevDurumTur">
+          <End Role="tbl_GorevDurumTur" Type="Self.tbl_GorevDurumTur" Multiplicity="1" />
+          <End Role="tbl_Gorev" Type="Self.tbl_Gorev" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_GorevDurumTur">
+              <PropertyRef Name="id_GorevDurumTur" />
+            </Principal>
+            <Dependent Role="tbl_Gorev">
+              <PropertyRef Name="id_GorevDurumTur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Gorev_tbl_Kullanici">
+          <End Role="tbl_Kullanici" Type="Self.tbl_Kullanici" Multiplicity="1" />
+          <End Role="tbl_Gorev" Type="Self.tbl_Gorev" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Kullanici">
+              <PropertyRef Name="id_Kullanici" />
+            </Principal>
+            <Dependent Role="tbl_Gorev">
+              <PropertyRef Name="id_Kullanici" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Kullanici_tbl_Departman">
+          <End Role="tbl_Departman" Type="Self.tbl_Departman" Multiplicity="1" />
+          <End Role="tbl_Kullanici" Type="Self.tbl_Kullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Departman">
+              <PropertyRef Name="id_Departman" />
+            </Principal>
+            <Dependent Role="tbl_Kullanici">
+              <PropertyRef Name="id_Departman" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Kullanici_tbl_KullaniciTur">
+          <End Role="tbl_KullaniciTur" Type="Self.tbl_KullaniciTur" Multiplicity="1" />
+          <End Role="tbl_Kullanici" Type="Self.tbl_Kullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_KullaniciTur">
+              <PropertyRef Name="id_KullaniciTur" />
+            </Principal>
+            <Dependent Role="tbl_Kullanici">
+              <PropertyRef Name="id_KullaniciTur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_ArizaTakipModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Ariza" EntityType="Self.tbl_Ariza" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ArizaDurumTur" EntityType="Self.tbl_ArizaDurumTur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ArizaTur" EntityType="Self.tbl_ArizaTur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Departman" EntityType="Self.tbl_Departman" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Gorev" EntityType="Self.tbl_Gorev" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GorevDurumTur" EntityType="Self.tbl_GorevDurumTur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Kullanici" EntityType="Self.tbl_Kullanici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_KullaniciTur" EntityType="Self.tbl_KullaniciTur" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_Ariza_tbl_ArizaDurumTur" Association="Self.FK_tbl_Ariza_tbl_ArizaDurumTur">
+            <End Role="tbl_ArizaDurumTur" EntitySet="tbl_ArizaDurumTur" />
+            <End Role="tbl_Ariza" EntitySet="tbl_Ariza" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Ariza_tbl_ArizaTur" Association="Self.FK_tbl_Ariza_tbl_ArizaTur">
+            <End Role="tbl_ArizaTur" EntitySet="tbl_ArizaTur" />
+            <End Role="tbl_Ariza" EntitySet="tbl_Ariza" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Ariza_tbl_Kullanici" Association="Self.FK_tbl_Ariza_tbl_Kullanici">
+            <End Role="tbl_Kullanici" EntitySet="tbl_Kullanici" />
+            <End Role="tbl_Ariza" EntitySet="tbl_Ariza" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Gorev_tbl_GorevDurumTur" Association="Self.FK_tbl_Gorev_tbl_GorevDurumTur">
+            <End Role="tbl_GorevDurumTur" EntitySet="tbl_GorevDurumTur" />
+            <End Role="tbl_Gorev" EntitySet="tbl_Gorev" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Gorev_tbl_Kullanici" Association="Self.FK_tbl_Gorev_tbl_Kullanici">
+            <End Role="tbl_Kullanici" EntitySet="tbl_Kullanici" />
+            <End Role="tbl_Gorev" EntitySet="tbl_Gorev" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Kullanici_tbl_Departman" Association="Self.FK_tbl_Kullanici_tbl_Departman">
+            <End Role="tbl_Departman" EntitySet="tbl_Departman" />
+            <End Role="tbl_Kullanici" EntitySet="tbl_Kullanici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Kullanici_tbl_KullaniciTur" Association="Self.FK_tbl_Kullanici_tbl_KullaniciTur">
+            <End Role="tbl_KullaniciTur" EntitySet="tbl_KullaniciTur" />
+            <End Role="tbl_Kullanici" EntitySet="tbl_Kullanici" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_ArizaTakipModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tbl_Ariza">
+          <Key>
+            <PropertyRef Name="id_Ariza" />
+          </Key>
+          <Property Name="id_Ariza" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_ArizaTur" Type="Int16" Nullable="false" />
+          <Property Name="id_ArizaDurumTur" Type="Byte" Nullable="false" />
+          <Property Name="id_Kullanici" Type="Int32" Nullable="false" />
+          <Property Name="Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ArizaGirisTarihi" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tbl_ArizaDurumTur" Relationship="Self.FK_tbl_Ariza_tbl_ArizaDurumTur" FromRole="tbl_Ariza" ToRole="tbl_ArizaDurumTur" />
+          <NavigationProperty Name="tbl_ArizaTur" Relationship="Self.FK_tbl_Ariza_tbl_ArizaTur" FromRole="tbl_Ariza" ToRole="tbl_ArizaTur" />
+          <NavigationProperty Name="tbl_Kullanici" Relationship="Self.FK_tbl_Ariza_tbl_Kullanici" FromRole="tbl_Ariza" ToRole="tbl_Kullanici" />
+        </EntityType>
+        <EntityType Name="tbl_ArizaDurumTur">
+          <Key>
+            <PropertyRef Name="id_ArizaDurumTur" />
+          </Key>
+          <Property Name="id_ArizaDurumTur" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArizaDurumTurAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tbl_Ariza" Relationship="Self.FK_tbl_Ariza_tbl_ArizaDurumTur" FromRole="tbl_ArizaDurumTur" ToRole="tbl_Ariza" />
+        </EntityType>
+        <EntityType Name="tbl_ArizaTur">
+          <Key>
+            <PropertyRef Name="id_ArizaTur" />
+          </Key>
+          <Property Name="id_ArizaTur" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArizaTurAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tbl_Ariza" Relationship="Self.FK_tbl_Ariza_tbl_ArizaTur" FromRole="tbl_ArizaTur" ToRole="tbl_Ariza" />
+        </EntityType>
+        <EntityType Name="tbl_Departman">
+          <Key>
+            <PropertyRef Name="id_Departman" />
+          </Key>
+          <Property Name="id_Departman" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmanAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tbl_Kullanici" Relationship="Self.FK_tbl_Kullanici_tbl_Departman" FromRole="tbl_Departman" ToRole="tbl_Kullanici" />
+        </EntityType>
+        <EntityType Name="tbl_Gorev">
+          <Key>
+            <PropertyRef Name="id_Gorev" />
+          </Key>
+          <Property Name="id_Gorev" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_GorevDurumTur" Type="Int16" Nullable="false" />
+          <Property Name="id_Kullanici" Type="Int32" Nullable="false" />
+          <Property Name="GorevAciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GorevBasTarihi" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GorevBitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tbl_GorevDurumTur" Relationship="Self.FK_tbl_Gorev_tbl_GorevDurumTur" FromRole="tbl_Gorev" ToRole="tbl_GorevDurumTur" />
+          <NavigationProperty Name="tbl_Kullanici" Relationship="Self.FK_tbl_Gorev_tbl_Kullanici" FromRole="tbl_Gorev" ToRole="tbl_Kullanici" />
+        </EntityType>
+        <EntityType Name="tbl_GorevDurumTur">
+          <Key>
+            <PropertyRef Name="id_GorevDurumTur" />
+          </Key>
+          <Property Name="id_GorevDurumTur" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GorevDurumTurAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tbl_Gorev" Relationship="Self.FK_tbl_Gorev_tbl_GorevDurumTur" FromRole="tbl_GorevDurumTur" ToRole="tbl_Gorev" />
+        </EntityType>
+        <EntityType Name="tbl_Kullanici">
+          <Key>
+            <PropertyRef Name="id_Kullanici" />
+          </Key>
+          <Property Name="id_Kullanici" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Departman" Type="Int16" Nullable="false" />
+          <Property Name="id_KullaniciTur" Type="Int16" Nullable="false" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Eposta" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tbl_Ariza" Relationship="Self.FK_tbl_Ariza_tbl_Kullanici" FromRole="tbl_Kullanici" ToRole="tbl_Ariza" />
+          <NavigationProperty Name="tbl_Departman" Relationship="Self.FK_tbl_Kullanici_tbl_Departman" FromRole="tbl_Kullanici" ToRole="tbl_Departman" />
+          <NavigationProperty Name="tbl_Gorev" Relationship="Self.FK_tbl_Gorev_tbl_Kullanici" FromRole="tbl_Kullanici" ToRole="tbl_Gorev" />
+          <NavigationProperty Name="tbl_KullaniciTur" Relationship="Self.FK_tbl_Kullanici_tbl_KullaniciTur" FromRole="tbl_Kullanici" ToRole="tbl_KullaniciTur" />
+        </EntityType>
+        <EntityType Name="tbl_KullaniciTur">
+          <Key>
+            <PropertyRef Name="id_KullaniciTur" />
+          </Key>
+          <Property Name="id_KullaniciTur" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TurAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tbl_Kullanici" Relationship="Self.FK_tbl_Kullanici_tbl_KullaniciTur" FromRole="tbl_KullaniciTur" ToRole="tbl_Kullanici" />
+        </EntityType>
+        <Association Name="FK_tbl_Ariza_tbl_ArizaDurumTur">
+          <End Role="tbl_ArizaDurumTur" Type="Self.tbl_ArizaDurumTur" Multiplicity="1" />
+          <End Role="tbl_Ariza" Type="Self.tbl_Ariza" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_ArizaDurumTur">
+              <PropertyRef Name="id_ArizaDurumTur" />
+            </Principal>
+            <Dependent Role="tbl_Ariza">
+              <PropertyRef Name="id_ArizaDurumTur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Ariza_tbl_ArizaTur">
+          <End Role="tbl_ArizaTur" Type="Self.tbl_ArizaTur" Multiplicity="1" />
+          <End Role="tbl_Ariza" Type="Self.tbl_Ariza" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_ArizaTur">
+              <PropertyRef Name="id_ArizaTur" />
+            </Principal>
+            <Dependent Role="tbl_Ariza">
+              <PropertyRef Name="id_ArizaTur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Ariza_tbl_Kullanici">
+          <End Role="tbl_Kullanici" Type="Self.tbl_Kullanici" Multiplicity="1" />
+          <End Role="tbl_Ariza" Type="Self.tbl_Ariza" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Kullanici">
+              <PropertyRef Name="id_Kullanici" />
+            </Principal>
+            <Dependent Role="tbl_Ariza">
+              <PropertyRef Name="id_Kullanici" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Kullanici_tbl_Departman">
+          <End Role="tbl_Departman" Type="Self.tbl_Departman" Multiplicity="1" />
+          <End Role="tbl_Kullanici" Type="Self.tbl_Kullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Departman">
+              <PropertyRef Name="id_Departman" />
+            </Principal>
+            <Dependent Role="tbl_Kullanici">
+              <PropertyRef Name="id_Departman" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Gorev_tbl_GorevDurumTur">
+          <End Role="tbl_GorevDurumTur" Type="Self.tbl_GorevDurumTur" Multiplicity="1" />
+          <End Role="tbl_Gorev" Type="Self.tbl_Gorev" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_GorevDurumTur">
+              <PropertyRef Name="id_GorevDurumTur" />
+            </Principal>
+            <Dependent Role="tbl_Gorev">
+              <PropertyRef Name="id_GorevDurumTur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Gorev_tbl_Kullanici">
+          <End Role="tbl_Kullanici" Type="Self.tbl_Kullanici" Multiplicity="1" />
+          <End Role="tbl_Gorev" Type="Self.tbl_Gorev" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Kullanici">
+              <PropertyRef Name="id_Kullanici" />
+            </Principal>
+            <Dependent Role="tbl_Gorev">
+              <PropertyRef Name="id_Kullanici" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Kullanici_tbl_KullaniciTur">
+          <End Role="tbl_KullaniciTur" Type="Self.tbl_KullaniciTur" Multiplicity="1" />
+          <End Role="tbl_Kullanici" Type="Self.tbl_Kullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_KullaniciTur">
+              <PropertyRef Name="id_KullaniciTur" />
+            </Principal>
+            <Dependent Role="tbl_Kullanici">
+              <PropertyRef Name="id_KullaniciTur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_ArizaTakipEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tbl_Ariza" EntityType="Self.tbl_Ariza" />
+          <EntitySet Name="tbl_ArizaDurumTur" EntityType="Self.tbl_ArizaDurumTur" />
+          <EntitySet Name="tbl_ArizaTur" EntityType="Self.tbl_ArizaTur" />
+          <EntitySet Name="tbl_Departman" EntityType="Self.tbl_Departman" />
+          <EntitySet Name="tbl_Gorev" EntityType="Self.tbl_Gorev" />
+          <EntitySet Name="tbl_GorevDurumTur" EntityType="Self.tbl_GorevDurumTur" />
+          <EntitySet Name="tbl_Kullanici" EntityType="Self.tbl_Kullanici" />
+          <EntitySet Name="tbl_KullaniciTur" EntityType="Self.tbl_KullaniciTur" />
+          <AssociationSet Name="FK_tbl_Ariza_tbl_ArizaDurumTur" Association="Self.FK_tbl_Ariza_tbl_ArizaDurumTur">
+            <End Role="tbl_ArizaDurumTur" EntitySet="tbl_ArizaDurumTur" />
+            <End Role="tbl_Ariza" EntitySet="tbl_Ariza" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Ariza_tbl_ArizaTur" Association="Self.FK_tbl_Ariza_tbl_ArizaTur">
+            <End Role="tbl_ArizaTur" EntitySet="tbl_ArizaTur" />
+            <End Role="tbl_Ariza" EntitySet="tbl_Ariza" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Ariza_tbl_Kullanici" Association="Self.FK_tbl_Ariza_tbl_Kullanici">
+            <End Role="tbl_Kullanici" EntitySet="tbl_Kullanici" />
+            <End Role="tbl_Ariza" EntitySet="tbl_Ariza" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Kullanici_tbl_Departman" Association="Self.FK_tbl_Kullanici_tbl_Departman">
+            <End Role="tbl_Departman" EntitySet="tbl_Departman" />
+            <End Role="tbl_Kullanici" EntitySet="tbl_Kullanici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Gorev_tbl_GorevDurumTur" Association="Self.FK_tbl_Gorev_tbl_GorevDurumTur">
+            <End Role="tbl_GorevDurumTur" EntitySet="tbl_GorevDurumTur" />
+            <End Role="tbl_Gorev" EntitySet="tbl_Gorev" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Gorev_tbl_Kullanici" Association="Self.FK_tbl_Gorev_tbl_Kullanici">
+            <End Role="tbl_Kullanici" EntitySet="tbl_Kullanici" />
+            <End Role="tbl_Gorev" EntitySet="tbl_Gorev" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Kullanici_tbl_KullaniciTur" Association="Self.FK_tbl_Kullanici_tbl_KullaniciTur">
+            <End Role="tbl_KullaniciTur" EntitySet="tbl_KullaniciTur" />
+            <End Role="tbl_Kullanici" EntitySet="tbl_Kullanici" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_ArizaTakipModelStoreContainer" CdmEntityContainer="DB_ArizaTakipEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DB_ArizaTakipModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Ariza">
+            <EntityTypeMapping TypeName="DB_ArizaTakipModel.tbl_Ariza">
+              <MappingFragment StoreEntitySet="tbl_Ariza">
+                <ScalarProperty Name="id_Ariza" ColumnName="id_Ariza" />
+                <ScalarProperty Name="id_ArizaTur" ColumnName="id_ArizaTur" />
+                <ScalarProperty Name="id_ArizaDurumTur" ColumnName="id_ArizaDurumTur" />
+                <ScalarProperty Name="id_Kullanici" ColumnName="id_Kullanici" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="ArizaGirisTarihi" ColumnName="ArizaGirisTarihi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ArizaDurumTur">
+            <EntityTypeMapping TypeName="DB_ArizaTakipModel.tbl_ArizaDurumTur">
+              <MappingFragment StoreEntitySet="tbl_ArizaDurumTur">
+                <ScalarProperty Name="id_ArizaDurumTur" ColumnName="id_ArizaDurumTur" />
+                <ScalarProperty Name="ArizaDurumTurAd" ColumnName="ArizaDurumTurAd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ArizaTur">
+            <EntityTypeMapping TypeName="DB_ArizaTakipModel.tbl_ArizaTur">
+              <MappingFragment StoreEntitySet="tbl_ArizaTur">
+                <ScalarProperty Name="id_ArizaTur" ColumnName="id_ArizaTur" />
+                <ScalarProperty Name="ArizaTurAd" ColumnName="ArizaTurAd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Departman">
+            <EntityTypeMapping TypeName="DB_ArizaTakipModel.tbl_Departman">
+              <MappingFragment StoreEntitySet="tbl_Departman">
+                <ScalarProperty Name="id_Departman" ColumnName="id_Departman" />
+                <ScalarProperty Name="DepartmanAd" ColumnName="DepartmanAd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Gorev">
+            <EntityTypeMapping TypeName="DB_ArizaTakipModel.tbl_Gorev">
+              <MappingFragment StoreEntitySet="tbl_Gorev">
+                <ScalarProperty Name="id_Gorev" ColumnName="id_Gorev" />
+                <ScalarProperty Name="id_GorevDurumTur" ColumnName="id_GorevDurumTur" />
+                <ScalarProperty Name="id_Kullanici" ColumnName="id_Kullanici" />
+                <ScalarProperty Name="GorevAciklama" ColumnName="GorevAciklama" />
+                <ScalarProperty Name="GorevBasTarihi" ColumnName="GorevBasTarihi" />
+                <ScalarProperty Name="GorevBitTarihi" ColumnName="GorevBitTarihi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GorevDurumTur">
+            <EntityTypeMapping TypeName="DB_ArizaTakipModel.tbl_GorevDurumTur">
+              <MappingFragment StoreEntitySet="tbl_GorevDurumTur">
+                <ScalarProperty Name="id_GorevDurumTur" ColumnName="id_GorevDurumTur" />
+                <ScalarProperty Name="GorevDurumTurAd" ColumnName="GorevDurumTurAd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Kullanici">
+            <EntityTypeMapping TypeName="DB_ArizaTakipModel.tbl_Kullanici">
+              <MappingFragment StoreEntitySet="tbl_Kullanici">
+                <ScalarProperty Name="id_Kullanici" ColumnName="id_Kullanici" />
+                <ScalarProperty Name="id_Departman" ColumnName="id_Departman" />
+                <ScalarProperty Name="id_KullaniciTur" ColumnName="id_KullaniciTur" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="Eposta" ColumnName="Eposta" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_KullaniciTur">
+            <EntityTypeMapping TypeName="DB_ArizaTakipModel.tbl_KullaniciTur">
+              <MappingFragment StoreEntitySet="tbl_KullaniciTur">
+                <ScalarProperty Name="id_KullaniciTur" ColumnName="id_KullaniciTur" />
+                <ScalarProperty Name="TurAd" ColumnName="TurAd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

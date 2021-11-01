@@ -1,0 +1,29 @@
+﻿@using ArizaTakipMVC.Models
+@model IEnumerable<tbl_Departman>
+
+@{
+    ViewBag.Title = "DepartmanListesi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2><i class="fas fa-list"></i> Departman Listesi</h2>
+
+<table class="table table-hover table-bordered">
+    <tr>
+        <th>Departman Adı</th>
+        <th>İşlemler</th>
+    </tr>
+    
+    @foreach(tbl_Departman item in Model)
+    {
+        <tr>
+
+            <td>@Html.DisplayFor(t => item.DepartmanAd)</td>
+
+            <td>
+                <a href="~/Departman/DepartmanGuncelle/@item.id_Departman" class="btn btn-success"><i class="fas fa-pencil-alt"></i> Departman Adını Güncelle</a>
+                <a href="~/Departman/DepartmanSil/@item.id_Departman" class="btn btn-danger"><i class="fas fa-times"></i> Departman Adını Sil</a>
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,28 @@
+﻿@using ArizaTakipMVC.Models
+@model IEnumerable<tbl_ArizaTur>
+
+@{
+    ViewBag.Title = "ArizaTurListesi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2><i class="fas fa-list"></i> Arıza Türleri Listesi</h2>
+
+<table class="table table-hover table-bordered">
+    <tr>
+        <th>Arıza Türü</th> 
+        <th>İşlemler</th>
+    </tr>
+    @foreach (tbl_ArizaTur item in Model)
+    {
+        <tr>
+           
+            <td>@Html.DisplayFor(t => item.ArizaTurAd)</td>
+
+            <td>
+                <a href="~/Ariza/ArizaTurGuncelle/@item.id_ArizaTur" class="btn btn-success"><i class="fas fa-pencil-alt"></i> Arıza Tür Adını Güncelle</a>
+                <a href="~/Ariza/ArizaTurSil/@item.id_ArizaTur" class="btn btn-danger"><i class="fas fa-times"></i> Arıza Tür Adını Sil</a>
+            </td>
+        </tr>
+    }
+</table>

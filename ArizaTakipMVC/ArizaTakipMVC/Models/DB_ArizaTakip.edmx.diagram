@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f0cdcf23efed4d229f4dfe26d6317dbc" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_ArizaTakipModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_ArizaTakipModel.tbl_Ariza" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_ArizaTakipModel.tbl_ArizaDurumTur" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_ArizaTakipModel.tbl_ArizaTur" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_ArizaTakipModel.tbl_Departman" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_ArizaTakipModel.tbl_Gorev" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_ArizaTakipModel.tbl_GorevDurumTur" Width="1.5" PointX="6" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_ArizaTakipModel.tbl_Kullanici" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_ArizaTakipModel.tbl_KullaniciTur" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="DB_ArizaTakipModel.FK_tbl_Ariza_tbl_ArizaDurumTur" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_ArizaTakipModel.FK_tbl_Ariza_tbl_ArizaTur" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_ArizaTakipModel.FK_tbl_Ariza_tbl_Kullanici" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_ArizaTakipModel.FK_tbl_Kullanici_tbl_Departman" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_ArizaTakipModel.FK_tbl_Gorev_tbl_GorevDurumTur" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_ArizaTakipModel.FK_tbl_Gorev_tbl_Kullanici" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_ArizaTakipModel.FK_tbl_Kullanici_tbl_KullaniciTur" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

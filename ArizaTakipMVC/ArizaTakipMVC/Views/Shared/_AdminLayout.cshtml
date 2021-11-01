@@ -1,0 +1,97 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Admin Sayfası</title>
+    <link href="~/Content/AdminTemasi/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminTemasi/css/sb-admin.css" rel="stylesheet" />
+    <link href="~/Content/AdminTemasi/css/plugins/morris.css" rel="stylesheet" />
+    <link href="~/Content/AdminTemasi/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+
+
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">        
+                <a class="navbar-brand" href="#">İşlemler</a>
+            </div>
+
+            <ul class="nav navbar-right top-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Admin <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="~/Kullanici/Logout"><i class="fa fa-fw fa-power-off"></i> Çıkış Yap</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#kategori"><i class="glyphicon glyphicon-edit"></i> Kullanıcılar <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="kategori" class="collapse">
+                            <li>
+                                <a href="~/Kullanici/KullaniciEkle">Kullanıcı Ekle</a>
+                            </li>
+                            <li>
+                                <a href="~/Kullanici/KullaniciListesi">Kullanıcı Listesi</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#brand"><i class="glyphicon glyphicon-edit"></i> Arıza Türleri <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="brand" class="collapse">
+                            <li>
+                                <a href="~/Ariza/ArizaTurEkle">Arıza Türü Ekle</a>
+                            </li>
+                            <li>
+                                <a href="~/Ariza/ArizaTurListesi">Arıza Türleri Listesi</a>
+                            </li>
+                        </ul>
+                    </li>
+                   
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#urun"><i class="glyphicon glyphicon-edit"></i> Departmanlar <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="urun" class="collapse">
+                            <li>
+                                <a href="~/Departman/DepartmanEkle"> Yeni Departman Ekle </a>
+                            </li>
+                            <li>
+                                <a href="~/Departman/DepartmanListesi">Departman Listesi</a>
+                            </li>
+                        </ul>
+                    </li>
+                   
+                  
+                </ul>
+            </div>
+        </nav>
+
+       
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+       
+        <script src="~/Content/AdminTemasi/js/jquery.js"></script>
+        <script src="~/Content/AdminTemasi/js/bootstrap.min.js"></script>
+        <script src="~/Content/AdminTemasi/js/plugins/morris/raphael.min.js"></script>
+        <script src="~/Content/AdminTemasi/js/plugins/morris/morris.min.js"></script>
+        <script src="~/Content/AdminTemasi/js/plugins/morris/morris-data.js"></script>
+</body>
+</html>

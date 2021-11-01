@@ -1,0 +1,86 @@
+﻿<!doctype html>
+<html lang="en">
+@using ArizaTakipMVC.Models;
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Arıza & İş Takip Sistemi</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="~/Content/KullaniciTemasi/css/style.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Arıza & İş Takip</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <span class="glyphicon glyphicon-home warning"></span>
+                        <a class="nav-link" href="~/Kullanici/KullaniciIndex"><i class="fas fa-home"></i> Anasayfa</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="~/Ariza/ArizaListesi"><i class="fas fa-cogs"></i> Arıza Takip</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="~/Gorev/GorevListesi"><i class="fas fa-briefcase"></i> İş Takip</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="~/Kullanici/Logout"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
+                    </li>
+                    <li class="nav-item active" style="margin-left:100px">
+                        @{
+                            DB_ArizaTakipEntities db = new DB_ArizaTakipEntities();
+                            tbl_Kullanici kullanici = new tbl_Kullanici();
+
+                            if (Session["Kullanici"] != null)
+                            {
+                                int id = Convert.ToInt32(User.Identity.Name);
+
+                                kullanici = db.tbl_Kullanici.FirstOrDefault(k => k.id_Kullanici == id);
+                            }
+                        }
+                        <span class="nav-link">(@kullanici.Ad @kullanici.Soyad - @kullanici.tbl_Departman.DepartmanAd -@kullanici.tbl_KullaniciTur.TurAd)</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="~/Content/KullaniciTemasi/js/holder.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/moment-with-locales.min.js"></script>
+    <script src="~/Scripts/tempusdominus-bootstrap-4.min.js"></script>
+
+    <div class="container pb-5">
+        @RenderBody()
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">Tüm hakları saklıdır.</span>
+        </div>
+    </footer>
+</body>
+</html>

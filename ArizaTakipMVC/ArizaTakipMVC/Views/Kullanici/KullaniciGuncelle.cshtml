@@ -1,0 +1,48 @@
+﻿@using ArizaTakipMVC.Models
+@model ArizaTakipMVC.Models.ViewModel.KullaniciViewModel
+
+@{
+    ViewBag.Title = "KullaniciGuncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("KullaniciGuncelle", "Kullanici", FormMethod.Post))
+{
+    <h2><i class="fas fa-pencil-alt"></i> Kullanıcıyı Güncelle</h2>
+    <table class="table table-hover table-bordered">
+        @Html.HiddenFor(model => model.kullaniciYeniKayit.id_Kullanici)
+        <tr>
+            <td><label>Departman</label></td>
+            <td> @Html.DropDownListFor(model => model.kullaniciYeniKayit.id_Departman, Model.DepartmanListesi, new { @class = "form-control" })</td>
+        </tr>
+        <tr>
+            <td><label>Kullanıcı Türü</label></td>
+            <td> @Html.DropDownListFor(model => model.kullaniciYeniKayit.id_KullaniciTur, Model.KullaniciTurListesi, new { @class = "form-control" })</td>
+        </tr>
+        <tr>
+            <td><label for="inputKullaniciAd">Ad</label></td>
+            <td>@Html.TextBoxFor(model => model.kullaniciYeniKayit.Ad, new { @class = "form-control", required = "required", placeholder = "Ad giriniz" }) </td>
+        </tr>
+        <tr>
+            <td><label for="inputKullaniciSoyad">Soyad</label></td>
+            <td>@Html.TextBoxFor(model => model.kullaniciYeniKayit.Soyad, new { @class = "form-control", required = "required", placeholder = "Soyad giriniz" }) </td>
+        </tr>
+        <tr>
+            <td><label for="inputKullaniciEposta">E-posta</label></td>
+            <td>@Html.TextBoxFor(model => model.kullaniciYeniKayit.Eposta, new { @class = "form-control", required = "required", placeholder = "E-posta giriniz" }) </td>
+        </tr>
+        <tr>
+            <td><label for="inputKullaniciSifre">Şifre</label></td>
+            <td>@Html.TextBoxFor(model => model.kullaniciYeniKayit.Sifre, new { @class = "form-control", required = "required", placeholder = "Şifre giriniz" }) </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.ActionLink("Kullanıcılar Listesine Geri dön", "KullaniciListesi")
+            </td>
+            <td>
+                <input type="submit" class="btn btn-success" value="Kullanıcıyı Güncelle" />
+            </td>
+        </tr>
+    </table>
+}

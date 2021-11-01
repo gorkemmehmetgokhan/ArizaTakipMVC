@@ -1,0 +1,30 @@
+﻿@using ArizaTakipMVC.Models
+@model  tbl_ArizaTur
+
+@{
+    ViewBag.Title = "ArizaTurGuncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("ArizaTurGuncelle", "Ariza", FormMethod.Post))
+{
+    <h2><i class="fas fa-pencil-alt"></i> Arıza Türünü Güncelle</h2>
+    <table class="table table-hover table-bordered">
+        @Html.HiddenFor(model => model.id_ArizaTur)
+     
+        <tr>
+            <td><label for="inputArizaTurAd">Arıza Türü Adı</label></td>
+            <td>@Html.TextBoxFor(model => model.ArizaTurAd, new { @class = "form-control", required = "required", placeholder = "Arıza tür adı giriniz" }) </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.ActionLink("Arıza Türleri Listesine Geri dön", "ArizaTurListesi")
+            </td>
+            <td>
+                <input type="submit" class="btn btn-success" value="Arıza Tür Adını Güncelle" />
+            </td>
+        </tr>
+    </table>
+}
+

@@ -1,0 +1,116 @@
+﻿@using ArizaTakipMVC.Models
+@model ArizaTakipMVC.Models.ViewModel.ArizaViewModel
+
+@{
+    ViewBag.Title = "ArizaListesi";
+    Layout = "~/Views/Shared/_KullaniciLayout.cshtml";
+}
+
+<link href="~/Content/css/arizaListesi.css" rel="stylesheet" />
+
+<div>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#arizaInsertModal"><i class="fas fa-plus"></i> Arıza Kaydı Oluştur</button>
+</div>
+<br />
+<div>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Departman</th>
+                <th scope="col">Arıza Tür</th>
+                <th scope="col">Kaydı Oluşturan Kullanıcı</th>
+                <th scope="col">Açıklama</th>
+                <th scope="col">Kayıt Tarihi</th>
+                <th scope="col">Durum</th>
+                <th scope="col">İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ariza in Model.Arizalar)
+            {
+                <tr>
+                    <td>@ariza.tbl_Kullanici.tbl_Departman.DepartmanAd</td>
+                    <td>@ariza.tbl_ArizaTur.ArizaTurAd</td>
+                    <td>@ariza.tbl_Kullanici.Ad  @ariza.tbl_Kullanici.Soyad</td>
+                    <td>@ariza.Aciklama</td>
+                    <td>@ariza.ArizaGirisTarihi.ToString("dd/MM/yyyy")</td>
+                    <td class="durum_@ariza.tbl_ArizaDurumTur.id_ArizaDurumTur">@ariza.tbl_ArizaDurumTur.ArizaDurumTurAd</td>
+                    <td style="white-space: nowrap">
+
+
+                        @* Arızayı Düzeltme ve Silme yetkileri sadece arızayı oluşturan kullanıcıdadır. *@
+
+                        @if (ariza.id_Kullanici == Convert.ToInt32(User.Identity.Name))
+                        {
+                            <a href="~/Ariza/ArizaGuncelle/@ariza.id_Ariza" class="btn btn-success"><i class="fas fa-wrench"></i> Düzelt</a>
+                            <a href="~/Ariza/ArizaSil/@ariza.id_Ariza" class="btn btn-danger"><i class="fas fa-times"></i> Sil</a>
+
+                        }
+
+                        @* Yalnızca teknik personel statüsündeki kullanıcılar arıza durum türü üzerinde işlem yapmaya yetkilidir. *@
+
+                        @if (ViewData["id_KullaniciTur"].ToString() == "4")
+                        {
+                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+
+
+                                <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-pencil-alt"></i> Durum Türü Değiştir
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+
+                                        <a class="dropdown-item" href="~/Ariza/ArizaDurumGuncelle/@ariza.id_Ariza/1">Beklemede</a>
+                                        <a class="dropdown-item" href="~/Ariza/ArizaDurumGuncelle/@ariza.id_Ariza/2">İşleme Alındı</a>
+                                        <a class="dropdown-item" href="~/Ariza/ArizaDurumGuncelle/@ariza.id_Ariza/3">Arıza Giderildi</a>
+                                        <a class="dropdown-item" href="~/Ariza/ArizaDurumGuncelle/@ariza.id_Ariza/4">Arıza Giderilemedi</a>
+                                        <a class="dropdown-item" href="~/Ariza/ArizaDurumGuncelle/@ariza.id_Ariza/5">Dış Servise Gönderildi</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<div>
+    @* Yeni arıza kaydı eklemek için kullanılan modal. *@
+
+    @using (Html.BeginForm("ArizaKayit", "Ariza", FormMethod.Post))
+    {
+        <div class="modal fade" id="arizaInsertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Yeni Arıza Kaydı</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Arıza Türü:</label>
+                                @Html.DropDownListFor(model => model.ArizaYeniKayit.id_ArizaTur, Model.ArizaTurListesi, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Açıklama:</label>
+                                @Html.TextBoxFor(model => model.ArizaYeniKayit.Aciklama, new { @class = "form-control", required = "required", placeholder = "Arıza açıklaması giriniz." })
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Kapat</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

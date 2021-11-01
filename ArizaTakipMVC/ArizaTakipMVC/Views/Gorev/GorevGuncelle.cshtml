@@ -1,0 +1,63 @@
+﻿@using ArizaTakipMVC.Models
+@model ArizaTakipMVC.Models.ViewModel.GorevViewModel
+
+@{
+    ViewBag.Title = "GorevGuncelle";
+    Layout = "~/Views/Shared/_KullaniciLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("GorevGuncelle", "Gorev", FormMethod.Post))
+{
+    <h2> <i class="fas fa-pencil-alt"></i> Görev Kaydını Güncelle</h2>
+    <table class="table table-hover table-bordered">
+        @Html.HiddenFor(model => model.GorevYeniKayit.id_Gorev)
+
+        <tr>
+            <td><label for="inputGorevAciklama">Açıklama</label></td>
+            <td>@Html.TextBoxFor(model => model.GorevYeniKayit.GorevAciklama, new { @class = "form-control", required = "required", placeholder = "Açıklama giriniz" }) </td>
+        </tr>
+        <tr>
+            <td><label for="inputGorevBaslangic">Başlangıç Tarihi</label></td>
+            <td>
+                <div class="input-group date" id="dtpBaslangic" data-target-input="nearest">
+                    @Html.TextBoxFor(model => model.GorevYeniKayit.GorevBasTarihi, new { data_target = "#dtpBaslangic", @class = "form-control datetimepicker-input", required = "required" })
+                    <div class="input-group-append" data-target="#dtpBaslangic" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="inputGorevBitis">Bitiş Tarihi</label></td>
+            <td>
+                <div class="input-group date" id="dtpBitis" data-target-input="nearest">
+                    @Html.TextBoxFor(model => model.GorevYeniKayit.GorevBitTarihi, new { data_target = "#dtpBitis", @class = "form-control datetimepicker-input", required = "required" })
+                    <div class="input-group-append" data-target="#dtpBitis" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.ActionLink("Görev Listesine Geri dön", "GorevListesi")
+            </td>
+            <td>
+                <input type="submit" class="btn btn-success" value="Arıza Güncelle" />
+            </td>
+        </tr>
+    </table>
+}
+<script type="text/javascript">
+    $(function () {
+        $('#dtpBaslangic').datetimepicker({
+            locale: 'tr',
+            format: 'L'
+        });
+        $('#dtpBitis').datetimepicker({
+            locale: 'tr',
+            format: 'L'
+        });
+    });
+</script>

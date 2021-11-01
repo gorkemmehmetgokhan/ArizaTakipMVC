@@ -1,0 +1,164 @@
+﻿@using ArizaTakipMVC.Models
+@model ArizaTakipMVC.Models.ViewModel.GorevViewModel
+
+@{
+    ViewBag.Title = "GorevListesi";
+    Layout = "~/Views/Shared/_KullaniciLayout.cshtml";
+}
+
+<link href="~/Content/css/gorevListesi.css" rel="stylesheet" />
+
+@*Görev kaydı oluşturma yetkisi sadece müdür türünden kullanıcılara verilir.*@
+@if (ViewData["id_KullaniciTur"].ToString() == "2")
+{
+    <div>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#gorevInsertModal"><i class="fas fa-plus"></i> Yeni Görev Kaydı Oluştur</button>
+    </div>
+}
+
+<br />
+<div>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Departman</th>
+                <th scope="col">Kaydı Oluşturan Kullanıcı</th>
+                <th scope="col">Açıklama</th>
+                <th scope="col">Başlangıç Tarihi</th>
+                <th scope="col">Bitiş Tarihi</th>
+                <th scope="col">Durum</th>
+                <th scope="col">İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var gorev in Model.Gorevler)
+            {
+                <tr>
+                    <td>@gorev.tbl_Kullanici.tbl_Departman.DepartmanAd</td>
+                    <td>@gorev.tbl_Kullanici.Ad  @gorev.tbl_Kullanici.Soyad</td>
+                    <td>@gorev.GorevAciklama</td>
+                    <td>@gorev.GorevBasTarihi.ToString("dd/MM/yyyy")</td>
+                    <td>@gorev.GorevBitTarihi.ToString("dd/MM/yyyy")</td>
+
+                    <td class="durum_@gorev.tbl_GorevDurumTur.id_GorevDurumTur">@gorev.tbl_GorevDurumTur.GorevDurumTurAd</td>
+                    <td style="white-space: nowrap">
+                        <div>
+
+
+                            @* Görevi Düzeltme ve Silme yetkileri sadece görevi oluşturan kullanıcıdadır. *@
+
+                            @if (gorev.id_Kullanici == Convert.ToInt32(User.Identity.Name))
+                            {
+                                <a href="~/Gorev/GorevGuncelle/@gorev.id_Gorev" class="btn btn-success"><i class="fas fa-wrench"></i> Düzelt</a>
+                            }
+
+                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+
+
+                                <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-pencil-alt"></i> Durum Türü Değiştir
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+
+                                        @* Durum girme yetkisi Personel ve Teknik Personel türündeki kullanıcılar için aşağıdaki şekildedir. *@
+
+                                        @if (ViewData["id_KullaniciTur"].ToString() == "3" || ViewData["id_KullaniciTur"].ToString() == "4")
+                                        {
+                                            <a class="dropdown-item" href="~/Gorev/GorevDurumGuncelle/@gorev.id_Gorev/1">Beklemede</a>
+                                            <a class="dropdown-item" href="~/Gorev/GorevDurumGuncelle/@gorev.id_Gorev/2">İşleme Alındı</a>
+                                            <a class="dropdown-item" href="~/Gorev/GorevDurumGuncelle/@gorev.id_Gorev/3">Görev Tamamlandı</a>
+                                            <a class="dropdown-item" href="~/Gorev/GorevDurumGuncelle/@gorev.id_Gorev/4">Görev Tamamlanamadı</a>
+                                        }
+                                        else
+                                        {
+                                            @* Durum girme yetkisi Müdür türündeki kullanıcılar için aşağıdaki şekildedir. *@
+                                            <a class="dropdown-item" href="~/Gorev/GorevDurumGuncelle/@gorev.id_Gorev/5">Görev İptal Edildi</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<div>
+    @* Yeni görev kaydı eklemek için kullanılan modal. *@
+
+    @using (Html.BeginForm("GorevKayit", "Gorev", FormMethod.Post))
+    {
+        <div class="modal fade" id="gorevInsertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Yeni Görev Kaydı</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Açıklama:</label>
+                                @Html.TextBoxFor(model => model.GorevYeniKayit.GorevAciklama, new { @class = "form-control", required = "required", placeholder = "Görev açıklaması giriniz." })
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Görev Başlangıç Tarihi:</label>
+
+                                <div class="form-group">
+                                    <div class="input-group date" id="dtpBaslangic" data-target-input="nearest">
+                                        @Html.TextBoxFor(model => model.GorevYeniKayit.GorevBasTarihi, new { data_target = "#dtpBaslangic", @class = "form-control datetimepicker-input", required = "required" })
+                                        <div class="input-group-append" data-target="#dtpBaslangic" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Görev Bitiş Tarihi:</label>
+
+                                <div class="form-group">
+                                    <div class="input-group date" id="dtpBitis" data-target-input="nearest">
+                                        @Html.TextBoxFor(model => model.GorevYeniKayit.GorevBitTarihi, new { data_target = "#dtpBitis", @class = "form-control datetimepicker-input", required = "required" })
+                                        <div class="input-group-append" data-target="#dtpBitis" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Kapat</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@* Datatimepicker'ın dilini türkçe yapmak için kullanılan javascript *@
+
+<script type="text/javascript">
+    $(function () {
+        $('#dtpBaslangic').datetimepicker({
+            locale: 'tr',
+            format: 'L'
+        });
+        $('#dtpBitis').datetimepicker({
+            locale: 'tr',
+            format: 'L'
+        });
+    });
+</script>
